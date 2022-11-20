@@ -1,32 +1,50 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+<div class="box-wrapper-app">
+    <Layout/>
+</div>
 </template>
-
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+import Layout from '@/Layout'
+export default {
+    components:{
+        Layout
     }
-  }
+}
+</script>
+
+<style>
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;   
+}
+*::before, *::after{
+    box-sizing: border-box;
+}
+h1,h2,h3,h4,h5,h6{
+    font-weight: normal;
+}
+a{
+    color: inherit;
+    text-decoration: none;
+}
+ul,ol{
+    list-style: none;
+}
+table{
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+button{
+    border: 0px;
+    background: none;
+}
+input{
+  border: 0;
+  background: none;
+  outline: 0;
+}
+body{
+  background:rgb(240, 240, 240)
 }
 </style>
