@@ -1,11 +1,12 @@
 <template>
 <div class="theModifyLabel">
     <div class="title-wrapper">
-        <Title/>
+        <Title :titleText="this.titleText"/>
     </div>
 
     <div class="iconList">
         <ChangeIcon 
+        :titleIcon="this.titleIcon"
         :href="this.href"
         :IconList="this.IconList" 
         :choseIcon="this.choseIcon"
@@ -14,6 +15,7 @@
 
     <div class="confirm">
         <ChangeName 
+        :deleteIdListInit="this.deleteIdListInit"
         :modify="this.modify"
         :href="this.href"
         :text="this.text"
@@ -28,6 +30,15 @@ import ChangeIcon from '@/components/Label/ModifyLabel/ChangeIcon.vue'
 import ChangeName from '@/components/Label/ModifyLabel/ChangeName.vue'
 import IconListModel from '@/models/IconListModel'
 export default {
+props:[
+    'hrefChose',
+    'textChose',
+    'modifyInData',
+    'chosedLabel',
+    'titleIcon',
+    'titleText',
+    'deleteIdListInit',
+],
 data(){
     return{
         href:'',
@@ -94,12 +105,6 @@ components:{
     ChangeIcon,
     ChangeName,
 },
-props:[
-    'hrefChose',
-    'textChose',
-    'modifyInData',
-    'chosedLabel'
-],
 }
 </script>
 

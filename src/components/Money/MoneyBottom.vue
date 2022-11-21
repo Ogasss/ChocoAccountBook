@@ -3,10 +3,15 @@
     <div class="notes">
         <div class="icons">
             <div class="icon">
-                <Icon :href="`#Calendar`"/>                    
+                <Icon :href="`#Calendar`"/>
             </div>
             <div class="icon">
-                <Icon :href="`#Notebook`"/>                    
+                <Icon :href="`#Notebook`"/>
+                <transition>
+                    <div>
+                        
+                    </div>
+                </transition> 
             </div>
         </div>
         <div class="note">

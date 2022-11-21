@@ -3,7 +3,7 @@
         <div class="title">
             <div class="box-left"></div>
             <div class="content">
-                <span>更改图标</span>
+                <span>{{this.titleIcon}}</span>
             </div>
             <div class="box-right"></div>
         </div>
@@ -25,7 +25,8 @@ export default {
         'setHref',
         'IconList',
         'choseIcon',
-        'modify'
+        'modify',
+        'titleIcon',
     ],
     components:{
         IconList

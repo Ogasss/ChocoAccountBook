@@ -21,11 +21,11 @@
             <div class="box-right"></div>
         </div>
         <div class="confirm-wrapper">
-            <div class="confirm">
-                <Confirm :text="'删除'" :iconType="true" :colorType="true"/>
+            <div @click="this.deleteIdListInit"  class="confirm">
+                <Confirm :text="'取消'" :iconType="false" :colorType="true"/>
             </div>
-            <div @click="this.modify" :iconType="false" class="confirm">
-                <Confirm :text="`确定`"
+            <div @click="this.modify"  class="confirm">
+                <Confirm :text="`确定`" :iconType="true"
                 :colorType="true"
                 />
             </div>
@@ -43,7 +43,8 @@ props:[
     'href',
     'text',
     'setText',
-    'modify'
+    'modify',
+    'deleteIdListInit'
 ],
 components:{
     Confirm

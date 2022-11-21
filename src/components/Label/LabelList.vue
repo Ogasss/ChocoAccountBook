@@ -1,7 +1,10 @@
 <template>
 <div class="theLabels">
     <div class="label-wrapper">
-        <div class="label">
+        <div @click="showDeleteFlag||choseAddLabel({
+            href: '#Add to',
+            text: ''
+        })" class="label">
             <LabelIcon :href="'#Add to'" :text="'添加'" :activeFlag="''"/>
         </div>
     </div>
@@ -12,10 +15,15 @@
     
     :key="label.text" 
     
-    :class="label.deleteFlag ? `label-wrapper deleteChose`: `label-wrapper`">
+    :class="label.deleteFlag ? `label-wrapper deleteChose`:
+        `label-wrapper`">
         <div 
+        
         @click="showDeleteFlag ? choseDeleteLabel(label) : choseModifyLabel(label)"
-        @touchstart="!showDeleteFlag&&!showModifyFlag&&timeStart(label)" @touchend="!showDeleteFlag&&!showModifyFlag&&timeEnd()" class="label"
+        @touchstart="!showDeleteFlag&&!showModifyFlag&&timeStart(label)"
+        @touchend="!showDeleteFlag&&!showModifyFlag&&timeEnd()" 
+        
+        class="label"
         >
             <LabelIcon :href="label.href" :text="label.text" :activeFlag="label.activeFlag"/>
         </div>
@@ -31,6 +39,7 @@ props:[
     'type',
     'choseModifyLabel',
     'choseDeleteLabel',
+    'choseAddLabel',
     'showDeleteFlag',
     'showModifyFlag',
     'timeStart',

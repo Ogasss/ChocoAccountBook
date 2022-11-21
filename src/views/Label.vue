@@ -20,6 +20,7 @@
         :labelsList="this.labelsList"
         :type="this.type"
         :choseModifyLabel="this.choseModifyLabel"
+        :choseAddLabel="this.choseAddLabel"
 
         :choseDeleteLabel="this.choseDeleteLabel"
         :timeStart="this.timeStart"
@@ -32,7 +33,10 @@
 
     <transition name="bottomBox">
         <div v-show="showDeleteFlag" class="deleteLabel">
-
+            <DeleteLabel
+            :deleteIdListInit="this.deleteIdListInit"
+            :beTrueDelete="this.beTrueDelete"
+            />
         </div>    
     </transition>
 
@@ -40,7 +44,11 @@
         <div v-show="showModifyFlag" class="modifyLabel">
             <ModifyLabel
             :modifyInData="this.modifyInData"
-            :chosedLabel="this.chosedLabel"/>
+            :chosedLabel="this.chosedLabel"
+            :titleIcon="this.titleIcon"
+            :titleText="this.titleText"
+            :deleteIdListInit="this.deleteIdListInit"
+            />
         </div>
     </transition>
 
@@ -52,6 +60,7 @@ import MoneyTop from '@/components/Money/MoneyTop.vue'
 import LabelTitle from '@/components/Label/LabelTitle.vue'
 import LabelList from '@/components/Label/LabelList.vue'
 import ModifyLabel from '@/components/Label/ModifyLabel.vue'
+import DeleteLabel from '@/components/Label/DeleteLabel.vue'
 
 import labelsListModel from '@/models/labelsListModel'
 import { watch } from 'vue'
@@ -63,7 +72,8 @@ components:{
     MoneyTop,
     LabelTitle,
     LabelList,
-    ModifyLabel
+    ModifyLabel,
+    DeleteLabel
 },
 data(){
     return{
@@ -72,11 +82,18 @@ data(){
         chosedLabel:{},
         showModifyFlag:false,
         showLabelListFlag:true,
+        modifyType:'',
         //修改标签的变量
 
         showDeleteFlag:false,
         deleteLabelList:[],
-        deleteIdList:[]
+        deleteIdList:[],
+        //删除标签的变量
+
+        addOrModifyType: true,
+        titleText:'',
+        titleIcon:'',
+        //添加标签的变量
     }
 },
 computed:{
@@ -103,7 +120,7 @@ methods:{
             
         }
     },//更改支付收入模式，控制标签列表显示
-    choseModifyLabel(value){
+    choseLabel(value){
         let index = this.index
         if(!value.activeFlag){
             for(let i = 0;i<this.labelsList[index].length;i++){
@@ -116,7 +133,18 @@ methods:{
             value.activeFlag = false
             this.showModifyFlag = false
         }
+        if(this.addOrModifyType){
+            this.titleText = '修改标签'
+            this.titleIcon = '更改图标'
+        }else{
+            this.titleText = '添加标签'
+            this.titleIcon = '选择图标'
+        }
     },//选择标签
+    choseModifyLabel(value){
+        this.addOrModifyType = true
+        this.choseLabel(value)
+    },//选择进行修改标签
     showModify(){
         this.showModifyFlag = true
     },//显示修改框
@@ -128,20 +156,48 @@ methods:{
         }
     },//页面获取时。初始化标签列表
     modifyInData(object){
-        let index
-        if(this.type=== '支出'){
-            index = 0
-        }else if(this.type === '收入'){
-            index = 1
+        if(this.addOrModifyType){
+            let index = this.index
+            this.labelsList[index][object.id] = object
+            this.showLabelListFlag = false
+            let _this = this
+            setTimeout(function(){
+                _this.showLabelListFlag = true
+            }, 0);
+            labelsListModel.save(this.labelsList)
+        }else{
+            if(object.text.trim() === ''){
+                alert('还没输入标签名哦~')
+                return
+            }
+            if(object.href === `#Add to`){
+                alert('还没选择图标哦~')
+                return
+            }
+
+            let index = this.index
+            for(let i=0;i<this.labelsList[index].length;i++){
+                if(object.text === this.labelsList[index][i].text){
+                    alert('新增标签名已存在~')
+                    return
+                }
+            }
+            let length = this.labelsList[index].length
+            
+            object.id = length
+            object.deleteFlag = false
+            object.activeFlag = false
+            this.labelsList[index].push(object)
+            this.showLabelListFlag = false
+            let _this = this
+            setTimeout(function(){
+                _this.showLabelListFlag = true
+            }, 0);
+            labelsListModel.save(this.labelsList)
+            this.showModifyFlag = false
         }
-        this.labelsList[index][object.id] = object
-        this.showLabelListFlag = false
-        let _this = this
-        setTimeout(function(){
-            _this.showLabelListFlag = true
-        }, 0);
-        labelsListModel.save(this.labelsList)
-    },//存储修改标签的信息至model的data
+        
+    },//存储修改或添加的标签信息至model的data
     showDelete(){
         this.showModifyFlag = false
     },//显示删除框
@@ -189,16 +245,36 @@ methods:{
         }
     },//删除标签的id列表中，指定的id
     deleteIdListInit(){
-        console.log('执行')
-        let index 
-        this.index === 0 && (index = 1)
-        this.index === 1 && (index = 0)
-        for(let i=0;i<this.labelsList[index].length;i++){
-            console.log('初始化')
-            this.labelsList[index][i].activeFlag = false
-            this.labelsList[index][i].deleteFlag = false
+        for(let i=0;i<this.labelsList[0].length;i++){
+            this.labelsList[0][i].activeFlag = false
+            this.labelsList[0][i].deleteFlag = false
         }
-    }
+        for(let i=0;i<this.labelsList[1].length;i++){
+            this.labelsList[1][i].activeFlag = false
+            this.labelsList[1][i].deleteFlag = false
+        }
+        this.deleteIdList = []
+        this.showDeleteFlag = false
+        this.showModifyFlag = false
+    },//取消删除的重置标签方法
+    beTrueDelete(){
+        let index = this.index
+        for(let i=0;i<this.labelsList[index].length;i++){
+            if(this.deleteIdList.indexOf(this.labelsList[index][i].id)!==-1){
+                this.labelsList[index].splice(i,1)
+                i--
+            }
+        }
+        this.deleteIdListInit()
+        for(let i=0;i<this.labelsList[index].length;i++){
+            this.labelsList[index][i].id = i
+        }
+        labelsListModel.save(this.labelsList)
+    },//删除标签的方法
+    choseAddLabel(value){
+        this.addOrModifyType = false
+        this.choseLabel(value)
+    },//选择进行添加标签
 },
 mounted(){
     this.init()
@@ -257,14 +333,14 @@ watch:{
 
         .deleteLabel{
             width: 100%;
-            height: 20%;
+            height: 15%;
 
             position: absolute;
+
+            display: flex;
             
             z-index: 1;
             bottom: 0;
-
-            border: 1px solid red;
         }
 
         .modifyLabel{

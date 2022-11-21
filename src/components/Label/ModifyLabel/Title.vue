@@ -6,7 +6,7 @@
         <div class="title">
             <div class="box-left"></div>
             <div class="text">
-                <span>修改标签</span>
+                <span>{{this.titleText}}</span>
             </div>
             <div class="box-right"></div>
         </div>
@@ -15,7 +15,10 @@
 
 <script>
 export default {
-name:'Title'
+name:'Title',
+props:[
+    'titleText'
+]
 }
 </script>
 

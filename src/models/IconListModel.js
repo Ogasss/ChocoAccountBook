@@ -2,8 +2,7 @@ const localStorageKeyName = 'IconList'
 
 const IconListModel = {
     sourceArr:
-    `Add to.svg
-    Adjustments.svg
+    `Adjustments.svg
     Affirm.svg
     Bargraph.svg
     Calendar.svg

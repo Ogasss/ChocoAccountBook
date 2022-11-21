@@ -56,10 +56,16 @@ export default {
                     activeFlag: false,
                 },
                 {
-                    to:'/',
+                    to:'/account',
+                    href:'#Notebook',
+                    activeFlag: false                    
+                },
+                {
+                    to:'/recordList',
                     href:'#Bargraph',
                     activeFlag: false                    
-                }
+                },
+                
             ],
             bottomIcon:[
                 {

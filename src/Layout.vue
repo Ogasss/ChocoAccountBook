@@ -34,7 +34,7 @@ name:'Layout',
     },
     methods:{
         touchstart(e){
-            this.startX = e.touches[0].screenX
+            this.startX = e.changedTouches[0].clientX
         },
         touchend(e){
             this.endX = e.changedTouches[0].clientX

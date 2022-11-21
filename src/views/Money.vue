@@ -211,10 +211,10 @@ export default {
         },//提交单笔账单后初始化
         labelsInit(){
             if(this.type === '支出'){
-                this.labelList = labelList.data[0]
+                this.labelList = labelList.fetch()[0]
             }
             if(this.type === '收入'){
-                this.labelList = labelList.data[1]
+                this.labelList = labelList.fetch()[1]
             }
         },//重置列表
     },
