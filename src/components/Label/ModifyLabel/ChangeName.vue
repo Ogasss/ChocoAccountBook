@@ -22,9 +22,9 @@
         </div>
         <div class="confirm-wrapper">
             <div class="confirm">
-                <Confirm :text="'取消'" :colorType="true"/>
+                <Confirm :text="'删除'" :iconType="true" :colorType="true"/>
             </div>
-            <div @click="this.modify" class="confirm">
+            <div @click="this.modify" :iconType="false" class="confirm">
                 <Confirm :text="`确定`"
                 :colorType="true"
                 />

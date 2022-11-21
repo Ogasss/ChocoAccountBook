@@ -97,7 +97,6 @@ components:{
 props:[
     'hrefChose',
     'textChose',
-    'modifyLabel',
     'modifyInData',
     'chosedLabel'
 ],

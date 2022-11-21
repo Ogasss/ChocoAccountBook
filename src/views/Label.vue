@@ -19,7 +19,14 @@
         <LabelList 
         :labelsList="this.labelsList"
         :type="this.type"
-        :choseLabel="this.choseLabel"
+        :choseModifyLabel="this.choseModifyLabel"
+
+        :choseDeleteLabel="this.choseDeleteLabel"
+        :timeStart="this.timeStart"
+        :timeEnd="this.timeEnd"
+
+        :showDeleteFlag="this.showDeleteFlag"
+        :showModifyFlag="this.showModifyFlag"
         />
     </div>
 
@@ -32,9 +39,8 @@
     <transition name="bottomBox">
         <div v-show="showModifyFlag" class="modifyLabel">
             <ModifyLabel
-            :chosedLabel="this.chosedLabel"
             :modifyInData="this.modifyInData"
-            :modifyLabel="this.modifyLabel"/>
+            :chosedLabel="this.chosedLabel"/>
         </div>
     </transition>
 
@@ -48,6 +54,7 @@ import LabelList from '@/components/Label/LabelList.vue'
 import ModifyLabel from '@/components/Label/ModifyLabel.vue'
 
 import labelsListModel from '@/models/labelsListModel'
+import { watch } from 'vue'
 
 
 export default {
@@ -62,12 +69,14 @@ data(){
     return{
         type:'支出',
         labelsList:[],
-        
-        modifyLabel:{},
         chosedLabel:{},
-        showDeleteFlag:false,
         showModifyFlag:false,
         showLabelListFlag:true,
+        //修改标签的变量
+
+        showDeleteFlag:false,
+        deleteLabelList:[],
+        deleteIdList:[]
     }
 },
 computed:{
@@ -79,7 +88,7 @@ computed:{
         }else{
             return null
         }
-    }
+    },//当前支付或收入模式
 },
 methods:{
     changeType(){
@@ -94,7 +103,7 @@ methods:{
             
         }
     },//更改支付收入模式，控制标签列表显示
-    choseLabel(value){
+    choseModifyLabel(value){
         let index = this.index
         if(!value.activeFlag){
             for(let i = 0;i<this.labelsList[index].length;i++){
@@ -107,10 +116,9 @@ methods:{
             value.activeFlag = false
             this.showModifyFlag = false
         }
-    },//CenterLabel - 选择记账标签
-    showModify(value){
+    },//选择标签
+    showModify(){
         this.showModifyFlag = true
-        this.modifyLabel = value
     },//显示修改框
     init(){
         this.labelsList = labelsListModel.fetch()
@@ -121,8 +129,6 @@ methods:{
     },//页面获取时。初始化标签列表
     modifyInData(object){
         let index
-        console.log(object)
-        console.log(this.labelsList)
         if(this.type=== '支出'){
             index = 0
         }else if(this.type === '收入'){
@@ -136,13 +142,75 @@ methods:{
         }, 0);
         labelsListModel.save(this.labelsList)
     },//存储修改标签的信息至model的data
+    showDelete(){
+        this.showModifyFlag = false
+    },//显示删除框
+    timeStart(label){
+        this.timer = true
+        setTimeout(() => {
+            if(this.timer){
+                this.choseDeleteLabel(label)
+                if(label.deleteFlag === true && label.activeFlag === true){
+                    this.showDeleteFlag = true
+                }
+            }
+        }, 200)
+    },
+    timeEnd(){
+        setTimeout(() => {
+            this.timer = false
+        }, 100);
+    },//长按选择删除标签的辅助方法
+    choseDeleteLabel(value){
+        if(value.deleteFlag === true && value.activeFlag === true){
+            value.deleteFlag = false
+            value.activeFlag = false
+            this.deleteIdListRemove(value.id)
+            return
+        }else{
+            value.deleteFlag = true
+            value.activeFlag = true
+            this.deleteIdListAdd(value.id)
+        }
+    },//长按选择删除标签的方法
+    deleteIdListAdd(id){
+        if(this.deleteIdList.indexOf(id) === -1){
+            this.deleteIdList.push(id)
+            this.deleteIdList.sort()
+        }
+    },//向删除标签的id列表添加
+    deleteIdListRemove(id){
+        if(this.deleteIdList.indexOf(id)||this.deleteIdList.indexOf(id) === 0){
+            if(this.deleteIdList.length>1){
+                this.deleteIdList.splice(this.deleteIdList.indexOf(id),1)
+            }else{
+                this.deleteIdList = []
+            }
+        }
+    },//删除标签的id列表中，指定的id
+    deleteIdListInit(){
+        console.log('执行')
+        let index 
+        this.index === 0 && (index = 1)
+        this.index === 1 && (index = 0)
+        for(let i=0;i<this.labelsList[index].length;i++){
+            console.log('初始化')
+            this.labelsList[index][i].activeFlag = false
+            this.labelsList[index][i].deleteFlag = false
+        }
+    }
 },
 mounted(){
     this.init()
 },
 watch:{
-    chosedLbael(){
-        console.log(this.chosedLbael)
+    deleteIdList(){
+        if(this.deleteIdList.length === 0){
+            this.showDeleteFlag = false
+        }//当删除标签的ID列表中为空，解除删除状态
+    },
+    type(){
+        this.deleteIdListInit()
     }
 }
 }

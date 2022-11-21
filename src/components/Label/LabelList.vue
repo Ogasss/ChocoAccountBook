@@ -7,15 +7,16 @@
     </div>
 
     <div 
-    
-    @click="choseLabel(label)"
 
     v-for="label in labelsList[index]" 
     
     :key="label.text" 
     
-    class="label-wrapper">
-        <div class="label">
+    :class="label.deleteFlag ? `label-wrapper deleteChose`: `label-wrapper`">
+        <div 
+        @click="showDeleteFlag ? choseDeleteLabel(label) : choseModifyLabel(label)"
+        @touchstart="!showDeleteFlag&&!showModifyFlag&&timeStart(label)" @touchend="!showDeleteFlag&&!showModifyFlag&&timeEnd()" class="label"
+        >
             <LabelIcon :href="label.href" :text="label.text" :activeFlag="label.activeFlag"/>
         </div>
     </div>
@@ -28,7 +29,12 @@ name:"LabelList",
 props:[
     'labelsList',
     'type',
-    'choseLabel'
+    'choseModifyLabel',
+    'choseDeleteLabel',
+    'showDeleteFlag',
+    'showModifyFlag',
+    'timeStart',
+    'timeEnd',
 ],
 computed:{
     index(){
@@ -40,7 +46,7 @@ computed:{
             return null
         }
     }
-}
+},
 }
 </script>
 
@@ -66,5 +72,9 @@ computed:{
 
         width: 9vh;
         height: 9vh;
+    }
+    .deleteChose{
+        transform: scale(0.9);
+        transition: all 0.6s ease;
     }
 </style>

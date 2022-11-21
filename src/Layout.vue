@@ -1,7 +1,5 @@
 <template>
-<div class="theLayout">
-    <button class="text" @click="navFlag = !navFlag">PC测试导航按钮</button>
-
+<div @touchstart="touchstart" @touchend="touchend" class="theLayout">
     <div :class="!navFlag ? 'content-wrapper' : 'content-wrapper active'">
         <router-view></router-view>
     </div>
@@ -24,21 +22,37 @@ export default {
 name:'Layout',
     data(){
         return{
-            navFlag: false
+            navFlag: false,
+            startX: 0,
+            startY: 0,
+            endX: 0,
+            endY: 0,
         }
     },
     components:{
         Navigation
+    },
+    methods:{
+        touchstart(e){
+            this.startX = e.touches[0].screenX
+        },
+        touchend(e){
+            this.endX = e.changedTouches[0].clientX
+            if(this.startX - this.endX >= 100){
+                this.navFlag = true
+            }
+            if(this.startX - this.endX <= -100){
+                this.navFlag = false
+            }
+        }
+    },
+    mounted(){
+        alert("向左滑动展开导航栏")
     }
 }
 </script>
 
 <style lang="scss" scoped>
-.text{
-    right: 50%;
-    position: fixed;
-    border: 1px solid red;
-}
 .theLayout{
     display: flex;
     flex-direction: column;
@@ -63,7 +77,7 @@ name:'Layout',
 }
 .theLayout .content-wrapper button{
     position: absolute;
-    right: 0;
+    left: 0%;
 }
 .theLayout .active{
     transform: translate(-25%);

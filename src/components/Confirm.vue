@@ -30,18 +30,15 @@ export default {
 name:'Confirm',
 computed:{
     href(){
-        if(this.text === '确定'){
-            return '#Affirm'
-        }else if(this.text === '取消'){
-            return '#Error'
-        }else{
-            return null
-        }
+        if(this.iconType)   return '#Affirm' 
+        else    return '#Error'
+        
     }
 },
 props:[
     'text',
-    'colorType'
+    'colorType',
+    'iconType'
 ],
 }
 </script>
