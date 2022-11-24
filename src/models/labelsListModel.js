@@ -96,6 +96,9 @@ const labelModel = {
     },
     save(data){
         localStorage.setItem(localStorageKeyName,JSON.stringify(data))
+    },
+    init(){
+        this.save(this.data)
     }
 }
 

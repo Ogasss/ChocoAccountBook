@@ -5,9 +5,30 @@
 </template>
 <script>
 import Layout from '@/Layout'
+import recordListModel from '@/models/recordListModel'
+import labelsListModel from '@/models/labelsListModel'
 export default {
     components:{
         Layout
+    },
+    methods:{
+        init(){
+            let flag = false
+            if(!recordListModel.fetch()){
+                recordListModel.init()
+                flag = true
+            }
+            if(!labelsListModel.fetch()){
+                labelsListModel.init()
+                flag = true
+            }
+            if(flag){
+                this.$router.go(0)
+            }
+        }
+    },
+    mounted(){
+        this.init()
     }
 }
 </script>

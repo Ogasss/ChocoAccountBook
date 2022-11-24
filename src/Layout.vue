@@ -47,7 +47,8 @@ name:'Layout',
         }
     },
     mounted(){
-        alert("向左滑动展开导航栏")
+        console.log("PC操作：向左滑动展开导航栏")
+        console.log("标签编辑页面：长按标签删除，点击标签编辑，笔记本图标点击选择单笔账单记录的账本")
     }
 }
 </script>

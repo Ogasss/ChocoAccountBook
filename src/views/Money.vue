@@ -1,5 +1,5 @@
 <template>
-<div class="theMoney">
+<div v-if="F5flag" class="theMoney">
     <div class="top">
         <MoneyTop :type="this.type" :changeType="this.changeType"/>
     </div>
@@ -20,8 +20,11 @@
     </div>
 
     <div class="bottom">
-        <MoneyBottom 
+        <MoneyBottom
+        :theNote="this.note"
         :amount="this.amount" 
+        :accountBook="this.accountBook"
+        :setAccountBook="this.setAccountBook"
         :keysDown="this.keysDown"
         :getNote="this.getNote"
         :okay="this.okay"
@@ -48,6 +51,9 @@ export default {
             amount: '0',
             note:'',
             labelList,
+            accountBook:'巧克账本',
+
+            F5flag:true
         }
     },
     components: {
@@ -145,7 +151,7 @@ export default {
 
             let timing = arr[4]
 
-            let time = year+'/'+month+'/'+day+'/'+timing
+            let time = year+'/'+month+'/'+day
             return time
         },//获取当前时间
         okay(){
@@ -153,14 +159,23 @@ export default {
 
                 //账单类型
                 if(this.type === '支出'){
-                    data.type = '-'
+                    data.type = '支出'
                 }else if(this.type === '收入'){
-                    data.type = '+'
+                    data.type = '收入'
                 }
 
                 //账单数目
                 if(this.amount != '0'){
-                    data.amount = this.amount
+                    let theAccount = this.amount
+                    if(theAccount.split('.').length!==2){
+                        theAccount = theAccount + '.00'
+                    }else{
+                        const decimal = theAccount.split('.')[1]
+                        if(decimal.length === 1){
+                            theAccount = theAccount + '0'
+                        }
+                    }
+                    data.account = theAccount
                 }else{
                     alert('当前账单为0~')
                     return
@@ -181,15 +196,15 @@ export default {
                 }
 
                 //记账时间
-                data.time = this.getTime()
+                data.date = this.getTime()
+
+                data.accountBook = this.accountBook
 
             if(recordList.fetch()){
-                console.log('原有数据存在')
                 let oldData = recordList.fetch()  
                 oldData.push(data)
                 recordList.save(oldData)  
             }else{
-                console.log('原有数据不存在')
                 recordList.save([])
                 let oldData = recordList.fetch()
                 
@@ -199,6 +214,7 @@ export default {
 
             
             this.init()
+            alert('记完一笔咯~')
         },//bottom - 提交单笔账单
         init(){
             this.type = "支出"
@@ -207,7 +223,10 @@ export default {
             for(let i=0;i<this.labelList.length;i++){
                 this.labelList[i].activeFlag = false
             }
-            this.$router.go(0)
+            // this.F5flag = false
+            // setTimeout(() => {
+            //     this.F5flag = true
+            // }, 0);
         },//提交单笔账单后初始化
         labelsInit(){
             if(this.type === '支出'){
@@ -217,11 +236,15 @@ export default {
                 this.labelList = labelList.fetch()[1]
             }
         },//重置列表
+        setAccountBook(value){
+            this.accountBook = value
+            console.log(this.accountBook)
+        },//选择账本
     },
     watch:{
         type(){
             this.labelsInit()
-        }
+        },
     },
     mounted(){
         this.labelsInit()
