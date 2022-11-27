@@ -89,7 +89,8 @@ export default {
 name:'Top',
 props:[
     'listOrder',
-    'setOrder'
+    'setOrder',
+    'hideModifyRecord',
 ],
 data(){
     return{
@@ -100,6 +101,7 @@ data(){
 },
 methods:{
     typeClick(){
+        this.hideModifyRecord()
         this.dateFlag = false
         this.accountFlag = false
         if(!this.typeFlag){
@@ -109,6 +111,7 @@ methods:{
         }
     },
     dateClick(){
+        this.hideModifyRecord()
         this.typeFlag = false
         this.accountFlag = false
         if(!this.dateFlag){
@@ -118,6 +121,7 @@ methods:{
         }
     },
     accountClick(){
+        this.hideModifyRecord()
         this.typeFlag = false
         this.dateFlag = false
         if(!this.accountFlag){
@@ -177,7 +181,7 @@ span{
                 .list-top .item-wrapper .active-list div{
                     margin-top: 5px;
                     margin-left: auto;
-                    margin-right: 15%;
+                    margin-right: 10%;
                     height: 30px;
                     width: 80%;
                     display: flex;

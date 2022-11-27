@@ -9,6 +9,7 @@
                 <Icon :href="`#Notebook`"/>
             </div>
         </div>
+
         <transition name="accountBookList">
             <div v-show="this.accountBookListShowFlag" class="accountBook-wrapper">
                 <div :class="accountBook === book.name ? 'accountBook' : 'accountBook-active'" v-for="book in this.accountBookList" :key="book.name">
@@ -20,6 +21,7 @@
                 </div>
             </div>
         </transition> 
+
         <div class="note">
             <div class="note-wrapper">
                 <div class="box-left"></div>
@@ -29,6 +31,7 @@
                     type="text" 
                     @input="onInput"
                     placeholder="这里写备注喵"
+                    maxlength="12"
                     />
                 <div class="box-right"></div>
             </div>

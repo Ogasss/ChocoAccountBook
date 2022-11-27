@@ -1,5 +1,5 @@
 <template>
-<div class="theButtonToMoney">
+<div class="theButtonCreateAccountBook">
     <div class="theWrapper">
         <div class="icon-book">
             <Icon :href="`#Up`"/>
@@ -20,7 +20,7 @@ name:'theButtonToBack'
 </script>
 
 <style lang="scss" scoped>
-.theButtonToMoney{
+.theButtonCreateAccountBook{
     height: 100%;
     width: 100%;
 

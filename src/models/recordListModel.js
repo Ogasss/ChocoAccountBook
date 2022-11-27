@@ -136,7 +136,27 @@ const recordModel = {
                 return this.minOrder(data).reverse()
             }
         }
+    },
+    deleteRecord(id){
+        let data =  this.fetch()
+        for(let i=0;i<data.length;i++){
+            if(data[i].id === id){
+                data.splice(i,1)
+            }
+        }
+        this.save(data)
+        return data
+    },
+    changeAccountBookName(oldName,newName){
+        let recordList = this.fetch()
+        for(let i=0;i<recordList.length;i++){
+            if(recordList[i].accountBook === oldName){
+                recordList[i].accountBook = newName
+            }
+        }
+        this.save(recordList)
     }
+
 }
 
 export default recordModel

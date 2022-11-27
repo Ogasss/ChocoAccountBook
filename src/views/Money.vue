@@ -152,7 +152,8 @@ export default {
             let timing = arr[4]
 
             let time = year+'/'+month+'/'+day
-            return time
+            let id = year+month+day+timing
+            return [time,id]
         },//获取当前时间
         okay(){
             let data = {}
@@ -196,7 +197,10 @@ export default {
                 }
 
                 //记账时间
-                data.date = this.getTime()
+                data.date = this.getTime()[0]
+
+                //时间戳id
+                data.id = this.getTime()[1]
 
                 data.accountBook = this.accountBook
 
@@ -238,7 +242,6 @@ export default {
         },//重置列表
         setAccountBook(value){
             this.accountBook = value
-            console.log(this.accountBook)
         },//选择账本
     },
     watch:{

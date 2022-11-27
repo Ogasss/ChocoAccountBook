@@ -5,18 +5,22 @@ const recordModel = {
     data:[
         {
             name:"巧克账本",
+            _account:0,
             account: 0,
         },
         {
             name:"支付宝",
+            _account:0,
             account: 0,
         },
         {
             name:"微信",
+            _account:0,
             account: 0,
         },
         {
             name:"现金",
+            _account:0,
             account: 0,
         },
     ],
@@ -51,7 +55,19 @@ const recordModel = {
     allCompute(){
         const data = this.fetch()
         for(let i=0;i<data.length;i++){
-            data[i].account = this.compute(data[i].name)
+            data[i].account = Number(this.compute(data[i].name)) + Number(data[i]._account)
+        }
+        this.save(data)
+    },
+    accountReset(name,number){
+        console.log(name,number)
+        let newAccount = Number(number)
+        let data = this.fetch()
+        for(let i=0;i<data.length;i++){
+            if(data[i].name === name){
+                data[i]._account = newAccount - Number(data[i].account)
+                data[i].account = newAccount
+            }
         }
         this.save(data)
     }

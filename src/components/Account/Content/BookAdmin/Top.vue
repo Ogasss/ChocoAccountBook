@@ -1,12 +1,18 @@
 <template>
 <div class="top">
-    <div class="name">
+    
+    <div 
+    @click="choseModifyName()" 
+    :class="this.modifyNameFlag ? 'name active' : 'name'"
+    >
         <span>{{this.accountBook.name}}</span>
     </div>
+
     <div class="account">
         <span class="text1">余额：</span>
         <span class="text2">{{this.accountBook.account}}</span>
     </div>
+
 </div>
 </template>
 
@@ -14,9 +20,10 @@
 export default {
 name:'Top',
 props:[
-    'accountBook'
-]
-
+    'accountBook',
+    'choseModifyName',
+    'modifyNameFlag'
+],
 }
 </script>
 
@@ -34,7 +41,7 @@ span{
         width: 25%;
         height: 80%;
         display: flex;
-        background: rgb(135, 120, 120);
+        background: rgb(185, 170, 155);
     }
         .name span{
             margin: auto;
@@ -56,4 +63,7 @@ span{
             margin-bottom: auto;
             margin-right: 10%;
         }
+    .active{
+        background: rgb(135, 120, 120);
+    }
 </style>

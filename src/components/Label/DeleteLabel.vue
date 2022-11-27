@@ -20,7 +20,6 @@
             <Confirm :text="`确定`" :colorType="1" :iconType="true"/>
         </div>
     </div>
-
 </div>
 </template>
 

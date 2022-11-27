@@ -8,7 +8,6 @@
             <BookList 
             :accountBookList="this.accountBookList"
             :getAccountBook="this.getAccountBook"
-            
             />
         </div>
         <div v-show="enterFlag" class="List-wrapper">
@@ -17,12 +16,22 @@
             :accountBookOfRecordList="this.accountBookOfRecordList"
             :listOrder="this.listOrder"
             :setOrder="this.setOrder"
+
+            :getChosedRecord="this.getChosedRecord"
+            :hideModifyRecord="this.hideModifyRecord"
+            :modifyRecordFlag="this.modifyRecordFlag"
+            :chosedRecord="this.chosedRecord"
+
+            :modifyNameFlag="this.modifyNameFlag"
+            :choseModifyName="this.choseModifyName"
+            :getNewName="this.getNewName"
+            :setNewName="this.setNewName"
             />
         </div>
     </div>
     <div class="button-wrapper">
         <div class="button" v-show="!enterFlag">
-            <ButtonToMoney/>
+            <ButtonCreateAccountBook/>
         </div>
         
         <div @click="enterFlag = false" class="button" v-show="enterFlag">
@@ -35,7 +44,7 @@
 <script>
 import Title from '@/components/Account/Content/Title.vue'
 import BookList from '@/components/Account/Content/BookList.vue'
-import ButtonToMoney from '@/components/Account/Content/ButtonToMoney.vue'
+import ButtonCreateAccountBook from '@/components/Account/Content/ButtonCreateAccountBook.vue'
 import ButtonToBack from '@/components/Account/Content/ButtonToBack.vue'
 import BookAdmin from '@/components/Account/Content/BookAdmin.vue'
 
@@ -58,7 +67,13 @@ data(){
                 anchor:'日期',
                 order:'降序',
             },
-        }
+        },
+        
+        modifyRecordFlag: false,
+        chosedRecord:{},
+
+        modifyNameFlag: false,
+        newName:'',
     }
 },
 methods:{
@@ -105,6 +120,49 @@ methods:{
             this.listOrder.order.anchor = value
         }
     },//设置list头部导航条件
+    getChosedRecord(record){
+        if(this.chosedRecord === record){
+            this.hideModifyRecord()
+        }else{
+            this.chosedRecord = record
+            this.modifyNameFlag = false
+            this.modifyRecordFlag = true
+        }
+        
+    },//点击获取账单
+    hideModifyRecord(){
+        this.modifyRecordFlag = false
+        this.chosedRecord = {
+                type:'',
+                label:'',
+                date:'',
+                account:'',
+            }
+    },//隐藏账单信息
+    choseModifyName(){
+        if(!this.modifyNameFlag){
+            this.modifyNameFlag = true
+            this.modifyRecordFlag = false
+            this.chosedRecord = {}
+        }else{
+            this.modifyNameFlag = false
+        }
+        
+    },//显示修改余额
+    getNewName(string){
+        console.log(string)
+        this.newName = string
+    },//用于筛选用户输入的字符串中的数字
+    setNewName(){
+        for(let i=0;i<this.accountBookList.length;i++){
+            if(this.accountBookList[i].name === this.name){
+                this.accountBookList[i].name = this.newName
+            }   
+        }
+        accountBookModel.save(this.accountBookList)
+        recordListModel.changeAccountBookName(this.name,this.newName)
+        this.choseModifyName()
+    }
 },
 mounted(){
     accountBookModel.allCompute()
@@ -128,7 +186,7 @@ watch:{
 components:{
     Title,
     BookList,
-    ButtonToMoney,
+    ButtonCreateAccountBook,
     ButtonToBack,
     BookAdmin,
 }

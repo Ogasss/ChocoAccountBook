@@ -1,5 +1,5 @@
 <template>
-<div class="theButtonToMoney">
+<div class="theButtonCreateAccountBook">
     <div class="theWrapper">
         <div class="icon-book">
             <Icon :href="`#Notebook`"/>
@@ -9,7 +9,7 @@
         </div>
         <div class="button-wrapper">
             <div class="box left"></div>
-            <div class="content"><span>管理我的账本~</span></div>
+            <div class="content"><span>创建新的账本~</span></div>
             <div class="box right"></div>
         </div>
     </div>
@@ -18,12 +18,12 @@
 
 <script>
 export default {
-name:'theButtonToMoney'
+name:'theButtonCreateAccountBook'
 }
 </script>
 
 <style lang="scss" scoped>
-.theButtonToMoney{
+.theButtonCreateAccountBook{
     height: 100%;
     width: 100%;
 
