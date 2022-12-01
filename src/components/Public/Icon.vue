@@ -15,13 +15,16 @@
 <script>
 let importAll = (requireContext) => requireContext.keys().forEach(requireContext)
 try{
-  importAll(require.context('../assets/icons',true,/\.svg$/))
+  importAll(require.context('@/assets/icons',true,/\.svg$/))
 }catch (error){
   console.log(error)
 }
 
 export default {
 name:'Icon',
+
+//svg图标的公用组件，仅有图标
+
 props:[
     'href',
 ],

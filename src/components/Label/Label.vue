@@ -2,10 +2,12 @@
 <div class="theLabel">
     <div class="top">
         <div class="title">
-            <LabelTitle />
+            <Title />
+            <!-- 顶部标题组件 -->
         </div>
         <div class="type">
-            <MoneyTop :type="this.type" :changeType="this.changeType" />
+            <TopTypeChose :type="this.type" :changeType="this.changeType" />
+            <!-- 顶部支出收入切换组件 公有组件-->
         </div>
     </div>
     
@@ -16,39 +18,51 @@
         showDeleteFlag ? 'center-delete' : null
     "
     >
-        <LabelList 
-        :labelsList="this.labelsList"
-        :type="this.type"
-        :choseModifyLabel="this.choseModifyLabel"
-        :choseAddLabel="this.choseAddLabel"
+        <CenterLabelList 
+            :labelsList="this.labelsList"
+            :type="this.type"
+            :choseModifyLabel="this.choseModifyLabel"
+            :choseAddLabel="this.choseAddLabel"
 
-        :choseDeleteLabel="this.choseDeleteLabel"
-        :timeStart="this.timeStart"
-        :timeEnd="this.timeEnd"
+            :choseDeleteLabel="this.choseDeleteLabel"
+            :timeStart="this.timeStart"
+            :timeEnd="this.timeEnd"
 
-        :showDeleteFlag="this.showDeleteFlag"
-        :showModifyFlag="this.showModifyFlag"
+            :showDeleteFlag="this.showDeleteFlag"
+            :showModifyFlag="this.showModifyFlag"
         />
+        <!-- 标签列表组件 -->
     </div>
 
     <transition name="bottomBox">
         <div v-show="showDeleteFlag" class="deleteLabel">
             <DeleteLabel
-            :deleteIdListInit="this.deleteIdListInit"
-            :beTrueDelete="this.beTrueDelete"
+                :deleteIdListInit="this.deleteIdListInit"
+                :beTrueDelete="this.beTrueDelete"
             />
+            <!-- 标签删除弹出框组件 -->
         </div>    
     </transition>
 
     <transition name="bottomBox">
         <div v-show="showModifyFlag" class="modifyLabel">
-            <ModifyLabel
-            :modifyOrAddInData="this.modifyOrAddInData"
-            :chosedLabel="this.chosedLabel"
-            :titleIcon="this.titleIcon"
-            :titleText="this.titleText"
-            :deleteIdListInit="this.deleteIdListInit"
+            <ModifyOrAddLabel
+                :modifyOrAddInData="this.modifyOrAddInData"
+                :chosedLabel="this.chosedLabel"
+                :titleIcon="this.titleIcon"
+                :titleText="this.titleText"
+                :deleteIdListInit="this.deleteIdListInit"
+                :modifyLabel="this.modifyLabel"
+
+                :setHref="this.setHref"
+                :setText="this.setText"
+                :modify="this.modify"
+                :modifyInit="this.modifyInit"
+                :iconListInit="this.iconListInit"
+                :choseIcon="this.choseIcon"
+                :iconList="this.iconList"
             />
+            <!-- 标签修改弹出框组件 -->
         </div>
     </transition>
 
@@ -56,44 +70,48 @@
 </template>
 
 <script>
-import MoneyTop from '@/components/Money/MoneyTop.vue'
-import LabelTitle from '@/components/Label/LabelTitle.vue'
-import LabelList from '@/components/Label/LabelList.vue'
-import ModifyLabel from '@/components/Label/ModifyLabel.vue'
-import DeleteLabel from '@/components/Label/DeleteLabel.vue'
+import TopTypeChose from '@/components/Public/TopTypeChose.vue'
+import Title from '@/components/Label/Top/Title'
+import CenterLabelList from '@/components/Label/Center/CenterLabelList.vue'
+import ModifyOrAddLabel from '@/components/Label/Bottom/ModifyOrAddLabel.vue'
+import DeleteLabel from '@/components/Label/Bottom/DeleteLabel.vue'
 
 import labelsListModel from '@/models/labelsListModel'
-import { watch } from 'vue'
+import IconListModel from '@/models/IconListModel'
 
 
 export default {
 name:'Label',
 components:{
-    MoneyTop,
-    LabelTitle,
-    LabelList,
-    ModifyLabel,
-    DeleteLabel
+    TopTypeChose,
+    Title,
+    CenterLabelList,
+    ModifyOrAddLabel,
+    DeleteLabel,
 },
 data(){
     return{
-        type:'支出',
-        labelsList:[],
-        chosedLabel:{},
-        showModifyFlag:false,
-        showLabelListFlag:true,
-        modifyType:'',
-        //修改标签的变量
+        type:'支出',//选择支出收入模式
+        
 
-        showDeleteFlag:false,
-        deleteLabelList:[],
-        deleteIdList:[],
-        //删除标签的变量
+        showModifyFlag:false,//控制修改标签框显示的bool
+        showDeleteFlag:false,//控制删除标签框显示的bool
+        showLabelListFlag:true,//用于控制视图标签列表的实时反馈刷新
+        
+        labelsList:[],//显示在视图中的标签列表，取决于type
+        chosedLabel:{},//存放选择的标签的容器
+        modifyLabel:{
+            href:'',
+            text:'',
+        },//用于存放修改后但为保存的标签内容
+        deleteLabelList:[],//用于存放被选中需要删除的标签
+        deleteIdList:[],//用于存放需要删除的标签的id
+        iconList:[],//存放图标的变量
 
         addOrModifyType: true,
         titleText:'',
         titleIcon:'',
-        //添加标签的变量
+        //上述三个变量用于控制修改或添加标签弹出框的文字显示内容
     }
 },
 computed:{
@@ -164,6 +182,7 @@ methods:{
             setTimeout(function(){
                 _this.showLabelListFlag = true
             }, 0);
+            
             labelsListModel.save(this.labelsList)
         }else{
             if(object.text.trim() === ''){
@@ -276,6 +295,51 @@ methods:{
         this.addOrModifyType = false
         this.choseLabel(value)
     },//选择进行添加标签
+
+    setHref(value){
+        this.modifyLabel.href = value
+    },//提供给修改标签的组件用于获取修改后的href
+    setText(value){
+        this.modifyLabel.text = value
+    },//提供给修改标签的组件用于获取修改后的text
+    modify(){
+        if(this.chosedLabel.href === this.modifyLabel.href && this.chosedLabel.text === this.modifyLabel.text){
+            alert('标签未做修改~')
+            return
+        }
+        let index = this.index
+        for(let i=0;i<this.labelsList[index].length;i++){
+            if(this.modifyLabel.text === this.labelsList[index][i].text){
+                alert('标签名已存在~')
+                return
+            }
+        }
+        if(this.chosedLabel.href !== this.modifyLabel.href){
+            this.chosedLabel.href = this.modifyLabel.href
+        }
+        if(this.chosedLabel.text !== this.modifyLabel.text && this.modifyLabel.text.trim() !== ''){
+            this.chosedLabel.text = this.modifyLabel.text
+        }
+        this.modifyOrAddInData(this.chosedLabel)
+    },//确定修改后，将被选中的标签的内容更改为修改的标签内容
+    modifyInit(){
+        this.modifyLabel.href = this.chosedLabel.href
+        this.modifyLabel.text = this.chosedLabel.text
+    },//修改标签初始化
+    iconListInit(){
+        IconListModel.init()
+        this.iconList = IconListModel.data
+    },//图标列表初始化
+    choseIcon(label){
+        this.setHref(label.href)
+        for(let i=0;i<this.iconList.length;i++){
+            if(this.iconList[i].href === label.href){
+                this.iconList[i].activeFlag = false
+            }else{
+                this.iconList[i].activeFlag = true
+            }
+        }
+    },//·控制图标列表的高亮
 },
 mounted(){
     this.init()
@@ -288,6 +352,22 @@ watch:{
     },
     type(){
         this.deleteIdListInit()
+    },
+    chosedLabel(){
+        this.modifyInit()
+    },
+    modifyLabel:{
+        deep:true,
+        handler(){
+            for(let i=0;i<this.iconList.length;i++){
+                if(this.iconList[i].href === this.modifyLabel.href){
+                    this.iconList[i].activeFlag = false
+                }else{
+                    this.iconList[i].activeFlag = true
+                }
+            }
+        }
+        
     }
 }
 }

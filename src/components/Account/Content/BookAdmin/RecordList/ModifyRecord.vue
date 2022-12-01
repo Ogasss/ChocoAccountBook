@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import Title from '@/components/Label/ModifyLabel/Title.vue'
+import Title from '@/components/Label/ModifyOrAddLabel/Title.vue'
 import recordListModel from '@/models/recordListModel'
 
 export default {

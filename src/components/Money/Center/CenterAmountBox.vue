@@ -23,10 +23,11 @@
 
 <script>
 export default {
-name:'MoneyCenterAmount',
+name:'CenterAmountBox',
 props:[
     'amount',
     'labelList'
+    /*用于视图显示*/
 ],
 computed:{
     label(){
@@ -37,7 +38,7 @@ computed:{
             }
         }
         return {href:'',text:'',Flag:true}
-    }
+    }//从labelList中找出被选中的标签作为返回值，显示在视图中
 }
 }
 </script>

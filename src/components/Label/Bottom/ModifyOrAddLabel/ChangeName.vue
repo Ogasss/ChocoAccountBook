@@ -2,7 +2,7 @@
 <div class="theChangeName">
     <div class="icon-wrapper">
         <div class="icon">
-            <LabelIcon :href="this.href" :text="this.text"/>
+            <LabelIcon :href="this.modifyLabel.href" :text="this.modifyLabel.text"/>
         </div>
     </div>
 
@@ -11,7 +11,7 @@
             <div class="box-left"></div>
             <div class="content">
                 <input 
-                    :value="text" 
+                    :value="modifyLabel.text" 
                     type="text" 
                     @input="onInput"
                     maxlength="2"
@@ -36,15 +36,16 @@
 </template>
 
 <script>
-import Confirm from '@/components/Confirm.vue'
+import Confirm from '@/components/Public/Confirm.vue'
 export default {
 name:'ChangeName',
 props:[
-    'href',
-    'text',
-    'setText',
+    'deleteIdListInit',
     'modify',
-    'deleteIdListInit'
+    'modifyLabel',
+    'setText',
+    
+    
 ],
 components:{
     Confirm

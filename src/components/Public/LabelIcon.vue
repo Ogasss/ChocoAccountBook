@@ -22,9 +22,12 @@
 </template>
 
 <script>
-import Icon from '@/components/Icon.vue'
+import Icon from '@/components/Public/Icon.vue'
 export default {
 name:'LabelIcon',
+
+//含有标签框及文字的icon组件
+
 props:[
     'text',
     'href',

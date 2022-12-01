@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import Confirm from '@/components/Confirm.vue'
+import Confirm from '@/components/Public/Confirm.vue'
 export default {
 name:'DeleteLabel',
 props:[

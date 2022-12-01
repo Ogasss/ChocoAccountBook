@@ -9,7 +9,7 @@
         </div>
         <div class="list">
             <IconList 
-            :IconList="this.IconList"
+            :iconList="this.iconList"
             :choseIcon="this.choseIcon"
             />
         </div>
@@ -17,13 +17,13 @@
 </template>
 
 <script>
-import IconList from '@/components/Label/ModifyLabel/IconList.vue'
+import IconList from '@/components/Label/Bottom/ModifyOrAddLabel/IconList.vue'
 export default {
     name:'ChangeIcon',
     props:[
         'href',
         'setHref',
-        'IconList',
+        'iconList',
         'choseIcon',
         'modify',
         'titleIcon',

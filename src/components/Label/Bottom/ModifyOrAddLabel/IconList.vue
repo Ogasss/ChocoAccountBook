@@ -4,7 +4,7 @@
 
     @click="choseIcon(label)"
 
-    v-for="label in IconList" 
+    v-for="label in iconList" 
     
     :key="label.href" 
     
@@ -20,7 +20,7 @@
 export default {
 name:'IconList',
 props:[
-    'IconList',
+    'iconList',
     'choseIcon'
 ]
 }

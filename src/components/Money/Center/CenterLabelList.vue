@@ -10,7 +10,7 @@
 
 <script>
 export default {
-name:'MoneyCenterLabels',
+name:'CenterLabelList',
 props:[
     'labelList',
     'choseLabel'

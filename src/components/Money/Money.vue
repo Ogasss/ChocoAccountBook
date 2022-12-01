@@ -1,77 +1,84 @@
 <template>
-<div v-if="F5flag" class="theMoney">
+<div class="theMoney">
     <div class="top">
-        <MoneyTop :type="this.type" :changeType="this.changeType"/>
+        <TopTypeChose 
+            :type="this.type" 
+            :changeType="this.changeType"
+        />
+        <!-- 支出与收入切换的顶部组件 -->
     </div>
 
     <div class="center">
         <div class="amount-wrapper">
-            <MoneyCenterAmount 
+            <CenterAmountBox 
                 :amount="this.amount"
                 :labelList="this.labelList"
-                />
+            />
+            <!-- 标签列表上的金额显示组件 -->
         </div>
         <div class="labels-wrapper">
-            <MoneyCenterLabels 
+            <CenterLabelList 
                 :labelList="this.labelList"
                 :choseLabel="this.choseLabel"
-                />
+            />
+            <!-- 中间标签列表组件 -->
         </div>
     </div>
 
     <div class="bottom">
-        <MoneyBottom
-        :theNote="this.note"
-        :amount="this.amount" 
-        :accountBook="this.accountBook"
-        :setAccountBook="this.setAccountBook"
-        :keysDown="this.keysDown"
-        :getNote="this.getNote"
-        :okay="this.okay"
+        <BottomNumberKeyboard
+            :theNote="this.note"
+            :setAccountBook="this.setAccountBook"
+            :keysDown="this.keysDown"
+            :getNote="this.getNote"
+            :okay="this.okay"
 
-        :year='this.year'
-        :month='this.month'
-        :day='this.day'
-        :setTime="this.setTime"
+            :year='this.year'
+            :month='this.month'
+            :day='this.day'
+            :setTime="this.setTime"
+            :accountBookList="this.accountBookList"
+            :accountBook="this.accountBook"
         />
+        <!-- 底部数字键盘组件 -->
     </div>
 
 </div>
 </template>
 
 <script>
-import MoneyTop from '@/components/Money/MoneyTop.vue'
-import MoneyCenterAmount from '@/components/Money/MoneyCenterAmount.vue'
-import MoneyCenterLabels from '@/components/Money/MoneyCenterLabels.vue'
-import MoneyBottom from '@/components/Money/MoneyBottom.vue'
+import TopTypeChose from '@/components/Public/TopTypeChose.vue'
+import CenterAmountBox from '@/components/Money/Center/CenterAmountBox.vue'
+import CenterLabelList from '@/components/Money/Center/CenterLabelList.vue'
+import BottomNumberKeyboard from '@/components/Money/Bottom/BottomNumberKeyboard.vue'
 
-import recordList from '@/models/recordListModel'
+import recordListModel from '@/models/recordListModel'
 import labelList from '@/models/labelsListModel'
+import accountBookListModel from '@/models/accountBookModel.js'
 
 export default {
     name:'Money',
     data(){
         return{
-            type:'支出',
-            amount: '0',
-            note:'',
-            labelList,
-            accountBook:'巧克账本',
+            type:'支出',//决定当前账单的支出与收入类型
+            amount: '0',//当前账单的记账金额
+            note:'',//当前账单的备注
+            labelList,//在labelInit()函数中完成赋值，根据type决定其值
+            accountBook:'巧克账本',//当前账单记入的账本
 
-            F5flag:true,
+            year:0,//决定当前账单中日期的年份
+            month:0,//月份
+            day:0,//具体日期
+            leapYear:null,//是否为闰年
 
-            year:0,
-            month:0,
-            day:0,
-            leapYear:null,
-            maxDay:null,
+            accountBookList:[]//账本列表，在mounted钩子中的调用get函数完成初始化赋值。
         }
     },
     components: {
-        MoneyTop,
-        MoneyCenterAmount,
-        MoneyCenterLabels,
-        MoneyBottom
+        TopTypeChose,
+        CenterAmountBox,
+        CenterLabelList,
+        BottomNumberKeyboard
     },
     methods:{
         keysDown(keyText){
@@ -272,16 +279,16 @@ export default {
 
                 data.accountBook = this.accountBook
 
-            if(recordList.fetch()){
-                let oldData = recordList.fetch()  
+            if(recordListModel.fetch()){
+                let oldData = recordListModel.fetch()  
                 oldData.push(data)
-                recordList.save(oldData)  
+                recordListModel.save(oldData)  
             }else{
-                recordList.save([])
-                let oldData = recordList.fetch()
+                recordListModel.save([])
+                let oldData = recordListModel.fetch()
                 
                 oldData.push(data)
-                recordList.save(oldData) 
+                recordListModel.save(oldData) 
             }
 
             
@@ -295,10 +302,6 @@ export default {
             for(let i=0;i<this.labelList.length;i++){
                 this.labelList[i].activeFlag = false
             }
-            // this.F5flag = false
-            // setTimeout(() => {
-            //     this.F5flag = true
-            // }, 0);
         },//提交单笔账单后初始化
         labelsInit(){
             if(this.type === '支出'){
@@ -311,6 +314,14 @@ export default {
         setAccountBook(value){
             this.accountBook = value
         },//选择账本
+        getAccountBook(){
+            if(accountBookListModel.fetch()){
+                this.accountBookList = accountBookListModel.fetch()
+            }else{
+                accountBookListModel.save(accountBookListModel.data)
+                this.accountBookList = accountBookListModel.fetch()
+            }
+        },//获取所有账本列表
     },
     watch:{
         type(){
@@ -320,6 +331,7 @@ export default {
     mounted(){
         this.labelsInit()
         this.getTime()
+        this.getAccountBook()
     }
 }
 </script>

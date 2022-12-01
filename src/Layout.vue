@@ -27,6 +27,7 @@ name:'Layout',
             startY: 0,
             endX: 0,
             endY: 0,
+            /*控制左滑引出右侧导航栏的变量*/
         }
     },
     components:{
@@ -45,11 +46,8 @@ name:'Layout',
                 this.navFlag = false
             }
         }
+        //左滑显示右侧导航栏
     },
-    mounted(){
-        console.log("PC操作：向左滑动展开导航栏")
-        console.log("标签编辑页面：长按标签删除，点击标签编辑，笔记本图标点击选择单笔账单记录的账本")
-    }
 }
 </script>
 

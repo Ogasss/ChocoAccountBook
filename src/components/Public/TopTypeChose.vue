@@ -25,7 +25,10 @@
 
 <script>
 export default {
-name:'MoneyTop',
+name:'TopTypeChose',
+
+//用于切换支出与收入的公有组件
+
 props:[
     'type',
     'changeType',

@@ -54,7 +54,7 @@ computed:{
         }else{
             return null
         }
-    }
+    }//根据type决定在视图上显示的标签列表
 },
 }
 </script>

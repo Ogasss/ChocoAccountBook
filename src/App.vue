@@ -27,7 +27,10 @@ export default {
             if(flag){
                 this.$router.go(0)
             }
-        }
+            /*完成recordList的初始化*/
+        
+        }//初始化方法
+        
     },
     mounted(){
         this.init()

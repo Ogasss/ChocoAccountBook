@@ -28,6 +28,9 @@
 <script>
 export default {
 name:'Confirm',
+
+// 确认与取消按钮的公用组件
+
 computed:{
     href(){
         if(this.iconType)   return '#Affirm' 

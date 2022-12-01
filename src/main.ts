@@ -3,8 +3,8 @@ import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
 import store from './store'
-import Icon from './components/Icon.vue'
-import LabelIcon from './components/LabelIcon.vue'
+import Icon from './components/Public/Icon.vue'
+import LabelIcon from './components/Public/LabelIcon.vue'
 
 Vue.config.productionTip = false
 

@@ -37,6 +37,7 @@
             </div>
         </div>
     </div>
+    
     <div class="computer">
         <div class="number-wrapper">
             <div v-for="number in numberKeysTop" :key="number" class="number">
@@ -67,23 +68,23 @@
 </template>
 
 <script>
-import accountBookList from '@/models/accountBookModel.js'
-import DateChose from '@/components/DateChose.vue'
+import DateChose from '@/components/Money/Bottom/DateChose.vue'
 export default {
-name:'MoneyBottom',
+name:'BottomNumberKeyboard',
 props:[
-    'theNote',
-    'amount',
-    'keysDown',
-    'getNote',
-    'okay',
-    'accountBook',
-    'setAccountBook',
-
-    'setTime',
-    'year',
-    'month',
-    'day',
+    'theNote',//备注
+    'year',//年份
+    'month',//月份
+    'day',//日期
+    'accountBook',//当前账本
+    'accountBookList',//账本列表
+    /*用于视图显示*/
+    
+    'keysDown',//当前数字按键记录到账单金额
+    'setTime',//用于设置当前账单的时间
+    'getNote',//用于设置当前账本备注的函数
+    'okay',//用于确定当前账单完成的函数
+    'setAccountBook',//用于设置当前账本的函数
 ],
 components:{
     DateChose,
@@ -104,32 +105,17 @@ data(){
             '.',
             '清空',
             '删除',
-        ],
-        note:'',
-        accountBookList:[],
-        accountBookListShowFlag: false,
-
-        dateChoseFlag:false,
+        ],//数字键盘上的按键
+        accountBookListShowFlag: false,//控制账本选择下拉框显示与否的bool
+        dateChoseFlag:false,//控制日期选择框显示与否的bool
     }
 },
 methods:{
     onInput(event){
         const input = event.target.value
         this.getNote(input)
-    },
-    getAccountBook(){
-        if(accountBookList.fetch()){
-            this.accountBookList = accountBookList.fetch()
-        }else{
-            accountBookList.save(accountBookList.data)
-            this.accountBookList = accountBookList.fetch()
-        }
-
-    }
+    },//获取输入框内的输入内容，并作为getNote的参数，传出给Money组件
 },
-mounted(){
-    this.getAccountBook()
-}
 }
 </script>
 
