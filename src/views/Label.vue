@@ -43,7 +43,7 @@
     <transition name="bottomBox">
         <div v-show="showModifyFlag" class="modifyLabel">
             <ModifyLabel
-            :modifyInData="this.modifyInData"
+            :modifyOrAddInData="this.modifyOrAddInData"
             :chosedLabel="this.chosedLabel"
             :titleIcon="this.titleIcon"
             :titleText="this.titleText"
@@ -155,7 +155,7 @@ methods:{
             this.labelsList[index][i].activeFlag = false
         }
     },//页面获取时。初始化标签列表
-    modifyInData(object){
+    modifyOrAddInData(object){
         if(this.addOrModifyType){
             let index = this.index
             this.labelsList[index][object.id] = object
@@ -187,6 +187,7 @@ methods:{
             object.id = length
             object.deleteFlag = false
             object.activeFlag = false
+            console.log(object)
             this.labelsList[index].push(object)
             this.showLabelListFlag = false
             let _this = this

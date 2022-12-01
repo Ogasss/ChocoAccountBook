@@ -33,7 +33,7 @@ export default {
 props:[
     'hrefChose',
     'textChose',
-    'modifyInData',
+    'modifyOrAddInData',
     'chosedLabel',
     'titleIcon',
     'titleText',
@@ -55,13 +55,17 @@ methods:{
         this.text = value
     },
     modify(){
+        if(this.chosedLabel.href === this.href && this.chosedLabel.text === this.text){
+            alert('标签未做修改~')
+            return
+        }
         if(this.chosedLabel.href !== this.href){
             this.chosedLabel.href = this.href
         }
         if(this.chosedLabel.text !== this.text && this.text.trim() !== ''){
             this.chosedLabel.text = this.text
         }
-        this.modifyInData(this.chosedLabel)
+        this.modifyOrAddInData(this.chosedLabel)
     },
     init(){
         this.href = this.chosedLabel.href

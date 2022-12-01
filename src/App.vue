@@ -68,6 +68,11 @@ input{
   outline: 0;
 }
 body{
-  background:rgb(240, 240, 240)
+  background: rgb(215, 210, 205);
+}
+.box-wrapper-app{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
 }
 </style>

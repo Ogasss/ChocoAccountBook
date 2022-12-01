@@ -129,13 +129,13 @@ export default {
 
     display: flex;
     flex-direction: column;
+    overflow:auto;
 
     transform: translateY(1px);
     
     background: rgb(165, 150, 150);
 }
 .theNavigation .icon-wrapper{
-    margin-top: -10%;
     margin-bottom: 20%;
     margin-left: auto;
     margin-right: auto;
@@ -144,8 +144,7 @@ export default {
     opacity: 1;
 }
 .theNavigation .icon-wrapper-bottom{
-    margin-top: 15%;
-    margin-bottom: -5%;
+    margin-bottom: 10%;
     margin-left: auto;
     margin-right: auto;
     width: 15vw;

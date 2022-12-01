@@ -20,24 +20,22 @@ props:[
 
 <style lang="scss" scoped>
 .theLabels{
+    margin-left: 2%;
     width: 96%;
-    height: 100%;
+    max-height: 100%;
 
     flex-wrap: wrap;
     display: flex;
-
     overflow: auto;
-
 }
 .label-wrapper{
+    margin-bottom: 3%;
     width: 25%;
     height: 33.3%;
-
     display: flex;
 }
 .label{
     margin: auto;
-
     width: 9vh;
     height: 9vh;
 }

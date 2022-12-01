@@ -57,12 +57,11 @@ name:'Layout',
 .theLayout{
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    min-width: 100vw;
-
+    height: 100%;
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
     overflow: hidden;
-
-    background: rgb(215, 210, 205);
 }
 .theLayout .content-wrapper{
     margin-top: 5vh;
