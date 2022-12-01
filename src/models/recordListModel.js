@@ -133,7 +133,7 @@ const recordModel = {
             }
         }else if(order === '降序'){
             for(let i=0;i<data.length;i++){
-                return this.minOrder(data).reverse()
+                return this.minDateOrder(data).reverse()
             }
         }
     },
@@ -155,6 +155,17 @@ const recordModel = {
             }
         }
         this.save(recordList)
+    },
+    deleteRecordOfBookName(name){
+        let data = this.fetch()
+        for(let i=0;i<data.length;i++){
+            if(data[i].accountBook===name){
+                console.log(data[i])
+                data.splice(i,1)
+                i--
+            }
+        }
+        this.save(data)
     }
 
 }

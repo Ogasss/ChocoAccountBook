@@ -28,6 +28,11 @@
         :keysDown="this.keysDown"
         :getNote="this.getNote"
         :okay="this.okay"
+
+        :year='this.year'
+        :month='this.month'
+        :day='this.day'
+        :setTime="this.setTime"
         />
     </div>
 
@@ -53,7 +58,13 @@ export default {
             labelList,
             accountBook:'巧克账本',
 
-            F5flag:true
+            F5flag:true,
+
+            year:0,
+            month:0,
+            day:0,
+            leapYear:null,
+            maxDay:null,
         }
     },
     components: {
@@ -151,10 +162,61 @@ export default {
 
             let timing = arr[4]
 
-            let time = year+'/'+month+'/'+day
+            this.year = Number(year)
+            this.month = Number(month)
+            this.day = Number(day)
+
             let id = year+month+day+timing
-            return [time,id]
+            return id
         },//获取当前时间
+        setTime(time,type){
+            if(time==='year'){
+                this.yearChange(type)
+            }else if(time==='month'){
+                this.monthChange(type)
+            }else if(time==='day'){
+                this.dayChange(type)
+            }
+        },
+        yearChange(type){
+            if(type){//增加
+                this.year++
+            }else{//减少
+                this.year--
+            }
+            if(this.year%400 === 0){
+                this.leapYear = true
+            }else{
+                this.leapYear = false
+            }
+        },
+        monthChange(type){
+            if(type && this.month<12){
+                this.month++
+            }
+            if(!type&&this.month>1){
+                this.month--
+            }
+        },
+        dayChange(type){
+            let max
+            if([1,3,5,7,8,10,12].indexOf(this.month)!==-1){
+                max = 31
+            }else if([4,6,9,11].indexOf(this.month)!==-1){
+                max = 30
+            }else if(this.month === 2){
+                this.leapYear?max=29:max=28
+            }
+            if(type){
+                if(this.day<max){
+                    this.day = this.day + 1
+                }
+            }else{
+                if(this.day>1){
+                    this.day = this.day - 1
+                }
+            }
+        },
         okay(){
             let data = {}
 
@@ -197,10 +259,16 @@ export default {
                 }
 
                 //记账时间
-                data.date = this.getTime()[0]
+                let str
+                if(this.day<10){
+                    str = this.year+'/'+this.month+'/'+'0'+this.day
+                }else{
+                    str = this.year+'/'+this.month+'/'+this.day
+                }
+                data.date = str
 
                 //时间戳id
-                data.id = this.getTime()[1]
+                data.id = this.getTime()
 
                 data.accountBook = this.accountBook
 
@@ -251,6 +319,7 @@ export default {
     },
     mounted(){
         this.labelsInit()
+        this.getTime()
     }
 }
 </script>

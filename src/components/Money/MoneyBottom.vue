@@ -2,10 +2,10 @@
 <div class="theBottom">
     <div class="notes">
         <div class="icons">
-            <div class="icon">
+            <div @click="accountBookListShowFlag = false;dateChoseFlag = !dateChoseFlag" class="icon">
                 <Icon :href="`#Calendar`"/>
             </div>
-            <div @click="accountBookListShowFlag = !accountBookListShowFlag" class="icon">
+            <div @click="dateChoseFlag = false;accountBookListShowFlag = !accountBookListShowFlag" class="icon">
                 <Icon :href="`#Notebook`"/>
             </div>
         </div>
@@ -51,11 +51,24 @@
             </div>
         </div>
     </div>
+
+    <transition name="accountBookList">
+        <div v-show="dateChoseFlag" class="dateChose">
+            <DateChose
+            :setTime="this.setTime"
+            :year="this.year"
+            :month="this.month"
+            :day="this.day"
+            />
+        </div>
+    </transition>
+
 </div>
 </template>
 
 <script>
 import accountBookList from '@/models/accountBookModel.js'
+import DateChose from '@/components/DateChose.vue'
 export default {
 name:'MoneyBottom',
 props:[
@@ -65,8 +78,16 @@ props:[
     'getNote',
     'okay',
     'accountBook',
-    'setAccountBook'
+    'setAccountBook',
+
+    'setTime',
+    'year',
+    'month',
+    'day',
 ],
+components:{
+    DateChose,
+},
 data(){
     return{
         numberKeysTop:[
@@ -86,7 +107,9 @@ data(){
         ],
         note:'',
         accountBookList:[],
-        accountBookListShowFlag: false
+        accountBookListShowFlag: false,
+
+        dateChoseFlag:false,
     }
 },
 methods:{
@@ -279,7 +302,16 @@ mounted(){
                 color: white;
                 font-size: 12px;
             }
+            
 
+.dateChose{
+    position: absolute;
+    height: 6%;
+    width: 75%;
+    bottom: 29%;
+    left: 5%;
+
+}
 .accountBookList-enter{
     transform: translateY(-50%);
     opacity: 0;
@@ -289,7 +321,7 @@ mounted(){
     opacity: 1;
 }
 .accountBookList-enter-active{
-    transition: all 0.8s ease;
+    transition: all 0.3s ease;
 }
 .accountBookList-leave{
     transform: translateY(0%);
@@ -300,6 +332,6 @@ mounted(){
     opacity: 0;
 }
 .accountBookList-leave-active{
-    transition: all 0.8s ease;
+    transition: all 0.3s ease;
 }
 </style>

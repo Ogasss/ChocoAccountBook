@@ -70,7 +70,7 @@ const recordModel = {
             }
         }
         this.save(data)
-    }
+    },
 }
 
 export default recordModel

@@ -61,7 +61,7 @@ export default {
                     activeFlag: false                    
                 },
                 {
-                    to:'/recordList',
+                    to:'/bargraph',
                     href:'#Bargraph',
                     activeFlag: false                    
                 },

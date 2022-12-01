@@ -166,7 +166,7 @@ components:{
         transform: translateY(0%);
     }
     .modify-enter-active{
-        transition: 0.6s all ease;
+        transition: 0.3s all ease;
     }
     .modify-leave{
         opacity: 1;
@@ -177,6 +177,6 @@ components:{
         transform: translateY(50%);
     }
     .modify-leave-active{
-        transition: 0.6s all ease;
+        transition: 0.3s all ease;
     }
 </style>

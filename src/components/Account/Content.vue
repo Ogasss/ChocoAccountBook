@@ -8,6 +8,19 @@
             <BookList 
             :accountBookList="this.accountBookList"
             :getAccountBook="this.getAccountBook"
+
+            :createNewBookFlag='this.createNewBookFlag'
+            :showOrHideCreateNewBook="this.showOrHideCreateNewBook"
+            :newBookName="this.newBookName"
+            :getNewBookName="this.getNewBookName"
+            :createNewBook="this.createNewBook"
+
+            :allowDeleteFlag="this.allowDeleteFlag"
+            :timeStart="this.timeStart"
+            :timeEnd="this.timeEnd"
+            :deleteBookName="this.deleteBookName"
+            :cancelDelete="this.cancelDelete"
+            :deleteAccountBook="this.deleteAccountBook"
             />
         </div>
         <div v-show="enterFlag" class="List-wrapper">
@@ -30,11 +43,11 @@
         </div>
     </div>
     <div class="button-wrapper">
-        <div class="button" v-show="!enterFlag">
+        <div @click="!allowDeleteFlag&&showOrHideCreateNewBook()" class="button" v-show="!enterFlag">
             <ButtonCreateAccountBook/>
         </div>
         
-        <div @click="enterFlag = false" class="button" v-show="enterFlag">
+        <div @click="enterFlag = false;hideModifyRecord();modifyNameFlag = false" class="button" v-show="enterFlag">
             <ButtonToBack/>
         </div>
     </div>
@@ -74,6 +87,12 @@ data(){
 
         modifyNameFlag: false,
         newName:'',
+
+        createNewBookFlag: false,
+        newBookName:'',
+
+        allowDeleteFlag: false,
+        deleteBookName: '',
     }
 },
 methods:{
@@ -90,6 +109,8 @@ methods:{
         let theData = recordListModel.fetch()
         let data = recordListModel.filterAccountBook(theData,name)
         this.accountBookOfRecordList = data
+        this.createNewBookFlag = false
+        this.newBookName = ''
         this.orderFilter()
     },//在账本总览点击账本，获取所有账单
     orderFilter(){
@@ -148,20 +169,103 @@ methods:{
             this.modifyNameFlag = false
         }
         
-    },//显示修改余额
+    },//显示修改账本名称
     getNewName(string){
-        console.log(string)
         this.newName = string
     },//用于筛选用户输入的字符串中的数字
     setNewName(){
-        for(let i=0;i<this.accountBookList.length;i++){
-            if(this.accountBookList[i].name === this.name){
-                this.accountBookList[i].name = this.newName
-            }   
+        let flag = true
+
+        if(this.newName === ''){
+            alert('新的名称为空！')
+            flag = false
+            this.newName = ''
+        }else{
+            for(let i=0;i<this.accountBookList.length;i++){
+                if(this.newName === this.accountBookList[i].name){
+                    alert('新账本名称已存在！')
+                    flag = false
+                    this.newName = ''
+                }
+            }
         }
-        accountBookModel.save(this.accountBookList)
-        recordListModel.changeAccountBookName(this.name,this.newName)
-        this.choseModifyName()
+        
+        if(flag){
+            for(let i=0;i<this.accountBookList.length;i++){
+                if(this.accountBookList[i].name === this.name){
+                    this.accountBookList[i].name = this.newName
+                }   
+            }
+            accountBookModel.save(this.accountBookList)
+            recordListModel.changeAccountBookName(this.name,this.newName)
+            this.choseModifyName()
+            this.newName = ''
+        }
+        
+    },//更改账本名称
+    showOrHideCreateNewBook(){
+        if(this.createNewBookFlag){
+            this.createNewBookFlag = false
+            this.newBookName = ''
+        }else{
+            this.createNewBookFlag = true
+        }
+    },//隐藏或显示创建新账本窗口
+    getNewBookName(string){
+        this.newBookName = string
+        console.log(this.newBookName)
+    },//获取新的账本名
+    createNewBook(){
+        let flag = true
+        if(this.newBookName === ''){
+            alert('创建新账本名称不能为空！')
+            flag = false
+        }else{
+            for(let i=0;i<this.accountBookList.length;i++){
+                if(this.newBookName === this.accountBookList[i].name){
+                    alert('创建的新账本已存在！')
+                    flag = false
+                }
+            }
+        }
+        if(flag){
+            let accountBook = {
+                name: '',
+                _account: 0,
+                account: 0,
+            }
+            accountBook.name = this.newBookName
+            this.accountBookList.push(accountBook)
+            accountBookModel.save(this.accountBookList)
+            this.showOrHideCreateNewBook()
+        }
+    },//创建新账本
+    timeStart(name){
+        this.timer = true
+        setTimeout(() => {
+            if(this.timer){
+                this.deleteBookName = name
+                this.allowDeleteFlag = true
+            }
+        }, 200)
+    },
+    timeEnd(){
+        setTimeout(() => {
+            this.timer = false
+        }, 100);
+    },//长按选择删除账本的辅助方法
+    cancelDelete(){
+        this.allowDeleteFlag = false,
+        this.deleteBookName = ''
+    },//取消删除账本
+    deleteAccountBook(){
+        for(let i=0;i<this.accountBookList.length;i++){
+            if(this.accountBookList[i].name === this.deleteBookName){
+                this.accountBookList.splice(i,1)
+            }
+        }
+        recordListModel.deleteRecordOfBookName(this.deleteBookName);accountBookModel.save(this.accountBookList)
+        this.cancelDelete()
     }
 },
 mounted(){
@@ -181,7 +285,7 @@ watch:{
         handler:function(){
             this.getAccountBook(this.name)
         }
-    }
+    },
 },
 components:{
     Title,

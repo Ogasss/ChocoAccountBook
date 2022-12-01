@@ -3,13 +3,15 @@
     <Layout/>
 </div>
 </template>
+
 <script>
 import Layout from '@/Layout'
 import recordListModel from '@/models/recordListModel'
 import labelsListModel from '@/models/labelsListModel'
+
 export default {
     components:{
-        Layout
+        Layout,
     },
     methods:{
         init(){

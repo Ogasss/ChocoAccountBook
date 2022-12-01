@@ -2,7 +2,7 @@
 <div class="theModifyAccount">
     <div class="wrapper">
         <div class="top">
-            <Title :titleText="`更改账单名称`"/>
+            <Title :titleText="`创建新的账本`"/>
         </div>
 
         <div class="input-wrapper">
@@ -13,22 +13,22 @@
                 
                 <input 
                     type="text"
-                    :value='newAccount'
+                    :value="newBookName"
                     class="input"
                     @input="onInput"
-                    placeholder="这里输入更改的名称~"
-                    maxlength="4"
+                    placeholder="这里输入账本的名称~"
+                    maxlength="6"
                 />
 
             </div>
         </div>
 
         <div class="confirm">
-            <div @click="choseModifyName()" class="theConfirm">
+            <div @click="showOrHideCreateNewBook()" class="theConfirm">
                 <span>取消</span>
             </div>
 
-            <div @click="setNewName()" class="theConfirm">
+            <div @click="createNewBook()" class="theConfirm">
                 <span>确定</span>
             </div>
         </div>
@@ -39,12 +39,12 @@
 <script>
 import Title from '@/components/Label/ModifyLabel/Title.vue'
 export default {
-name:'ModifyName',
+name:'ModifyAccount',
 props:[
-    'choseModifyName',
-    'newAccount',
-    'getNewName',
-    'setNewName'
+    'newBookName',
+    'showOrHideCreateNewBook',
+    'getNewBookName',
+    'createNewBook'
 ],
 data(){
     return{
@@ -57,7 +57,7 @@ components:{
 methods:{
     onInput(event){
         const input = event.target.value
-        this.getNewName(input)
+        this.getNewBookName(input)
     },
 }
 }
@@ -96,6 +96,7 @@ methods:{
                 justify-content: space-around;
                 border-radius: 5%;
                 background: rgb(240, 235, 225);
+                height: 80%;
             }
             .wrapper .input-wrapper .input{
                 margin-left: 5%;
