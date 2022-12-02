@@ -90,7 +90,7 @@ input{
   outline: 0;
 }
 body{
-  background: rgb(215, 210, 205);
+    background: rgb(215, 210, 205);
 }
 .box-wrapper-app{
     width: 100vw;
