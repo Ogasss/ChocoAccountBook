@@ -39,10 +39,10 @@ name:'Layout',
         },
         touchend(e){
             this.endX = e.changedTouches[0].clientX
-            if(this.startX - this.endX >= 100){
+            if(this.startX - this.endX >= 60){
                 this.navFlag = true
             }
-            if(this.startX - this.endX <= -100){
+            if(this.startX - this.endX <= -60){
                 this.navFlag = false
             }
         }

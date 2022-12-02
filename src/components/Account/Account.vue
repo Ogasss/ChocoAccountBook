@@ -128,7 +128,7 @@ methods:{
     },//设置list头部导航条件
     getChosedRecord(record){
         if(this.chosedRecord === record){
-            this.hideModifyRecord()
+            this.hideModifyRecord(true)
         }else{
             this.chosedRecord = record
             this.modifyNameFlag = false
