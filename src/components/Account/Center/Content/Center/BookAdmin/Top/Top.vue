@@ -101,7 +101,7 @@ data(){
 },
 methods:{
     typeClick(){
-        this.hideModifyRecord()
+        this.hideModifyRecord(true)
         this.dateFlag = false
         this.accountFlag = false
         if(!this.typeFlag){
@@ -111,7 +111,7 @@ methods:{
         }
     },
     dateClick(){
-        this.hideModifyRecord()
+        this.hideModifyRecord(true)
         this.typeFlag = false
         this.accountFlag = false
         if(!this.dateFlag){
@@ -121,7 +121,7 @@ methods:{
         }
     },
     accountClick(){
-        this.hideModifyRecord()
+        this.hideModifyRecord(true)
         this.typeFlag = false
         this.dateFlag = false
         if(!this.accountFlag){

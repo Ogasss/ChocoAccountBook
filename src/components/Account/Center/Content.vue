@@ -47,7 +47,7 @@
             <ButtonCreateAccountBook/>
         </div>
         
-        <div @click="hideModifyRecord()" class="button" v-show="enterFlag">
+        <div @click="hideModifyRecord(false)" class="button" v-show="enterFlag">
             <ButtonToBack/>
         </div>
     </div>

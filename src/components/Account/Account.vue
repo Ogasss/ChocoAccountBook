@@ -136,10 +136,11 @@ methods:{
         }
         
     },//点击获取账单
-    hideModifyRecord(){
+    hideModifyRecord(bool){
+        console.log('触发')
         this.modifyRecordFlag = false
         this.modifyNameFlag = false
-        this.enterFlag = false
+        this.enterFlag = bool
         this.chosedRecord = {
                 type:'',
                 label:'',
