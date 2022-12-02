@@ -1,6 +1,7 @@
 <template>
 <div class="box-wrapper-app">
     <Layout/>
+    <img v-show="this.qrcodeFlag" src="./assets/qrcode.png" alt="">
 </div>
 </template>
 
@@ -10,6 +11,11 @@ import recordListModel from '@/models/recordListModel'
 import labelsListModel from '@/models/labelsListModel'
 
 export default {
+    data(){
+        return{
+            qrcodeFlag:false
+        }
+    },
     components:{
         Layout,
     },
@@ -28,7 +34,13 @@ export default {
                 this.$router.go(0)
             }
             /*完成recordList的初始化*/
-        
+
+            if(document.documentElement.clientWidth > 500){
+                window.alert('请使用移动设备打开此应用')
+                console.log(document.documentElement.clientWidth)
+                this.qrcodeFlag = true
+            }
+
         }//初始化方法
         
     },
@@ -84,5 +96,15 @@ body{
     width: 100vw;
     height: 100vh;
     display: flex;
+    position: relative;
+}
+.box-wrapper-app img{
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
 }
 </style>
