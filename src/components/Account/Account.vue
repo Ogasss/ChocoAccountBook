@@ -137,7 +137,6 @@ methods:{
         
     },//点击获取账单
     hideModifyRecord(bool){
-        console.log('触发')
         this.modifyRecordFlag = false
         this.modifyNameFlag = false
         this.enterFlag = bool
