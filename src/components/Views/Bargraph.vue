@@ -1,7 +1,7 @@
 <template>
 <div class="theBargraph">
     <span>
-        统计暂未开发
+        图标统计暂未开发
     </span>
 </div>
 </template>
