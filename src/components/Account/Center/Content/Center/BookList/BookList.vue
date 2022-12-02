@@ -43,8 +43,8 @@
 </template>
 
 <script>
-import CreateNewAccountBook from '@/components/Account/Content/BookList/CreateNewAccountBook.vue'
-import DeleteAccountBook from '@/components/Account/Content/BookList/DeleteAccountBook.vue'
+import CreateNewAccountBook from '@/components/Account/Center/Content/Center/BookList/Bottom/CreateNewAccountBook.vue'
+import DeleteAccountBook from '@/components/Account/Center/Content/Center/BookList/Bottom/DeleteAccountBook.vue'
 export default {
 name:'BookList',
 props:[

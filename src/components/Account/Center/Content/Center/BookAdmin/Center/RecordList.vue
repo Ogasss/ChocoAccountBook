@@ -59,9 +59,9 @@
 </template>
 
 <script>
-import Top from '@/components/Account/Content/BookAdmin/RecordList/Top.vue'
-import ModifyRecord from '@/components/Account/Content/BookAdmin/RecordList/ModifyRecord'
-import ModifyName from '@/components/Account/Content/BookAdmin/RecordList/ModifyName.vue'
+import Top from '@/components/Account/Center/Content/Center/BookAdmin/Top/Top.vue'
+import ModifyRecord from '@/components/Account/Center/Content/Center/BookAdmin/Bottom/ModifyRecord.vue'
+import ModifyName from '@/components/Account/Center/Content/Center/BookAdmin/Bottom/ModifyName.vue'
 
 export default {
 name:'RecordList',

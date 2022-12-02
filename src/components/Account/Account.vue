@@ -1,71 +1,56 @@
 <template>
-<div class="theContent">
+<div class="theAccount">
     <div class="title-wrapper">
-        <Title :title="this.title"/>
+        <Title/>
     </div>
+
     <div class="content-wrapper">
-        <div v-show="!enterFlag" class="List-wrapper">
-            <BookList 
-            :accountBookList="this.accountBookList"
-            :getAccountBook="this.getAccountBook"
-
+        <Content
+            :enterFlag='this.enterFlag'
+            :title='this.title'
+            :name='this.name'
+            :accountBookList='this.accountBookList'
+            :accountBook='this.accountBook'
+            :accountBookOfRecordList='this.accountBookOfRecordList'
+            :listOrder='this.listOrder'
+            :modifyRecordFlag='this.modifyRecordFlag'
+            :chosedRecord='this.chosedRecord'
+            :modifyNameFlag='this.modifyNameFlag'
+            :newName='this.newName'
             :createNewBookFlag='this.createNewBookFlag'
-            :showOrHideCreateNewBook="this.showOrHideCreateNewBook"
-            :newBookName="this.newBookName"
-            :getNewBookName="this.getNewBookName"
-            :createNewBook="this.createNewBook"
-
-            :allowDeleteFlag="this.allowDeleteFlag"
-            :timeStart="this.timeStart"
-            :timeEnd="this.timeEnd"
-            :deleteBookName="this.deleteBookName"
-            :cancelDelete="this.cancelDelete"
-            :deleteAccountBook="this.deleteAccountBook"
-            />
-        </div>
-        <div v-show="enterFlag" class="List-wrapper">
-            <BookAdmin 
-            :accountBook="this.accountBook"
-            :accountBookOfRecordList="this.accountBookOfRecordList"
-            :listOrder="this.listOrder"
-            :setOrder="this.setOrder"
-
-            :getChosedRecord="this.getChosedRecord"
-            :hideModifyRecord="this.hideModifyRecord"
-            :modifyRecordFlag="this.modifyRecordFlag"
-            :chosedRecord="this.chosedRecord"
-
-            :modifyNameFlag="this.modifyNameFlag"
-            :choseModifyName="this.choseModifyName"
-            :getNewName="this.getNewName"
-            :setNewName="this.setNewName"
-            />
-        </div>
+            :newBookName='this.newBookName'
+            :allowDeleteFlag='this.allowDeleteFlag'
+            :deleteBookName='this.deleteBookName'
+            :getAccountBook='this.getAccountBook'
+            :orderFilter='this.orderFilter'
+            :setOrder='this.setOrder'
+            :getChosedRecord='this.getChosedRecord'
+            :hideModifyRecord='this.hideModifyRecord'
+            :choseModifyName='this.choseModifyName'
+            :getNewName='this.getNewName'
+            :setNewName='this.setNewName'
+            :showOrHideCreateNewBook='this.showOrHideCreateNewBook'
+            :getNewBookName='this.getNewBookName'
+            :createNewBook='this.createNewBook'
+            :timeStart='this.timeStart'
+            :timeEnd='this.timeEnd'
+            :cancelDelete='this.cancelDelete'
+            :deleteAccountBook='this.deleteAccountBook'
+        />
     </div>
-    <div class="button-wrapper">
-        <div @click="!allowDeleteFlag&&showOrHideCreateNewBook()" class="button" v-show="!enterFlag">
-            <ButtonCreateAccountBook/>
-        </div>
-        
-        <div @click="enterFlag = false;hideModifyRecord();modifyNameFlag = false" class="button" v-show="enterFlag">
-            <ButtonToBack/>
-        </div>
-    </div>
-</div>
+    
+</div> 
 </template>
 
 <script>
-import Title from '@/components/Account/Content/Title.vue'
-import BookList from '@/components/Account/Content/BookList.vue'
-import ButtonCreateAccountBook from '@/components/Account/Content/ButtonCreateAccountBook.vue'
-import ButtonToBack from '@/components/Account/Content/ButtonToBack.vue'
-import BookAdmin from '@/components/Account/Content/BookAdmin.vue'
+import Title from '@/components/Account/Top/Title.vue'
+import Content from '@/components/Account/Center/Content.vue'
 
 import recordListModel from '@/models/recordListModel'
 import accountBookModel from '@/models/accountBookModel'
 
 export default {
-name:'Content',
+name:'Account',
 data(){
     return{
         enterFlag: false,
@@ -153,6 +138,8 @@ methods:{
     },//点击获取账单
     hideModifyRecord(){
         this.modifyRecordFlag = false
+        this.modifyNameFlag = false
+        this.enterFlag = false
         this.chosedRecord = {
                 type:'',
                 label:'',
@@ -268,6 +255,10 @@ methods:{
         this.cancelDelete()
     }
 },
+components:{
+    Title,
+    Content
+},
 mounted(){
     accountBookModel.allCompute()
     this.accountBookList = accountBookModel.fetch()
@@ -287,45 +278,25 @@ watch:{
         }
     },
 },
-components:{
-    Title,
-    BookList,
-    ButtonCreateAccountBook,
-    ButtonToBack,
-    BookAdmin,
-}
 }
 </script>
 
-<style lang='scss' scoped>
-.theContent{
-    width: 95%;
-    height: 98%;
-
-    margin: auto;
-
-    border-radius: 3%;
-    background: rgb(240, 235, 225);
-}
-    .theContent .title-wrapper{
-        width:100%;
-        height: 8%;
-    }
-    .theContent .content-wrapper{
+<style lang="scss" scoped>
+    .theAccount{
         width: 100%;
-        height: 80%;
-        display: flex;
+        height: 100%;
     }
-        .theContent .content-wrapper .List-wrapper{
+        .title-wrapper{
+            margin-top: 2%;
             width: 100%;
-            height: 100%;
+            height: 6%;
+
+            display: flex;
         }
-    .theContent .button-wrapper{
-        width: 100%;
-        height: 12%;
-    }
-        .theContent .button-wrapper .button{
-            height: 100%;
+        .content-wrapper{
             width: 100%;
+            height: 92%;
+            
+            display: flex;
         }
 </style>

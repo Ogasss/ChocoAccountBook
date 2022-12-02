@@ -198,11 +198,20 @@ export default {
             }
         },
         monthChange(type){
-            if(type && this.month<12){
-                this.month++
+            if(type && this.month<=12){
+                if(this.month<12){
+                    this.month++
+                }else{
+                    this.month = 1
+                }
             }
-            if(!type&&this.month>1){
-                this.month--
+            if(!type&&this.month>=1){
+                if(this.month>1){
+                    this.month--
+                }else{
+                    this.month = 12
+                }
+                
             }
         },
         dayChange(type){
@@ -215,12 +224,21 @@ export default {
                 this.leapYear?max=29:max=28
             }
             if(type){
-                if(this.day<max){
-                    this.day = this.day + 1
+                if(this.day<=max){
+                    if(this.day<max){
+                        this.day++
+                    }else{
+                        this.day = 1
+                    }
                 }
             }else{
-                if(this.day>1){
-                    this.day = this.day - 1
+                if(this.day>=1){
+                    if(this.day>1){
+                        this.day--
+                    }else{
+                        this.day = max
+                    }
+                    
                 }
             }
         },
@@ -235,7 +253,7 @@ export default {
                 }
 
                 //账单数目
-                if(this.amount != '0'){
+                if(this.amount !== '0'&&Number(this.amount) !== 0){
                     let theAccount = this.amount
                     if(theAccount.split('.').length!==2){
                         theAccount = theAccount + '.00'

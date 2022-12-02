@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import Top from '@/components/Account/Content/BookAdmin/Top.vue'
-import RecordList from '@/components/Account/Content/BookAdmin/RecordList.vue'
+import Top from '@/components/Account/Center/Content/Center/BookAdmin/Top.vue'
+import RecordList from '@/components/Account/Center/Content/Center/BookAdmin/Center/RecordList.vue'
 export default {
 name:'BookAdmin',
 props:[

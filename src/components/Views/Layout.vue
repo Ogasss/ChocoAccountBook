@@ -17,7 +17,7 @@
 
 <script>
 
-import Navigation from '@/views/Navigation'
+import Navigation from '@/components/Views/Navigation.vue'
 export default {
 name:'Layout',
     data(){

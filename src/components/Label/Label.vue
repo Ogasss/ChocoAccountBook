@@ -314,10 +314,14 @@ methods:{
                 return
             }
         }
+        if(this.modifyLabel.text.trim() === ''){
+            alert('标签名不能为空')
+            return
+        }
         if(this.chosedLabel.href !== this.modifyLabel.href){
             this.chosedLabel.href = this.modifyLabel.href
         }
-        if(this.chosedLabel.text !== this.modifyLabel.text && this.modifyLabel.text.trim() !== ''){
+        if(this.chosedLabel.text !== this.modifyLabel.text){
             this.chosedLabel.text = this.modifyLabel.text
         }
         this.modifyOrAddInData(this.chosedLabel)

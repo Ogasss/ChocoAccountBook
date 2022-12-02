@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import Title from '@/components/Label/ModifyOrAddLabel/Title.vue'
+import Title from '@/components/Label/Bottom/ModifyOrAddLabel/Title.vue'
 export default {
 name:"DeleteAccountBook",
 props:[

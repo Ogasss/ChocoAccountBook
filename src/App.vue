@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Layout from '@/Layout'
+import Layout from '@/components/Views/Layout.vue'
 import recordListModel from '@/models/recordListModel'
 import labelsListModel from '@/models/labelsListModel'
 
