@@ -124,7 +124,7 @@ methods:{
         height: 95%;
         width: 95%;
         margin: auto;
-        border-radius: 5%;
+        border-radius: 15px;
 
         background: rgb(185, 170, 155);
     }
@@ -213,7 +213,7 @@ methods:{
                 flex-direction: column;
 
                 margin: auto;
-                border-radius: 5%;
+                border-radius: 15px;
                 
                 background: rgb(240, 235, 225);
             }

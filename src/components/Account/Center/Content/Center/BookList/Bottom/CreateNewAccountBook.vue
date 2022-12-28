@@ -65,7 +65,7 @@ methods:{
 
 <style lang="scss" scoped>
 .theModifyAccount{
-    border-radius: 5%;
+    border-radius: 15px;
 
     background: rgb(215, 215, 190);
 
@@ -94,7 +94,7 @@ methods:{
                 display: flex;
                 margin: auto;
                 justify-content: space-around;
-                border-radius: 5%;
+                border-radius: 15px;
                 background: rgb(240, 235, 225);
                 height: 80%;
             }

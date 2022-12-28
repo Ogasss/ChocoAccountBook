@@ -87,7 +87,7 @@ components:{
                 width: 70%;
                 height: 100%;
                 display: flex;
-                border-radius: 5%;
+                border-radius: 15px;
                 background: rgb(185, 170, 155);
             }
             .theBookList .item-wrapper .account-wrapper{
@@ -95,7 +95,7 @@ components:{
                 width: 25%;
                 height: 100%;
                 display: flex;
-                border-radius: 5%;
+                border-radius: 15px;
                 background: rgb(185, 170, 155);
             }
                 .item-wrapper .text{
@@ -118,7 +118,7 @@ components:{
             width: 70%;
             height: 100%;
             display: flex;
-            border-radius: 5%;
+            border-radius: 15px;
             background: rgb(135, 120, 120);
         }
         .theBookList .item-wrapper .account-wrapper-active{
@@ -126,7 +126,7 @@ components:{
             width: 25%;
             height: 100%;
             display: flex;
-            border-radius: 5%;
+            border-radius: 15px;
             background: rgb(135, 120, 120);
         }
 

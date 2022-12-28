@@ -67,7 +67,7 @@ name:'Layout',
     margin-right: 1vw;
     width: 98%;
     height: 93vh;
-    border-radius: 3%;
+    border-radius: 15px;;
 
     transform: translate(0%);
 

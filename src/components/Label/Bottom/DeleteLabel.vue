@@ -45,7 +45,7 @@ components:{
 
         background: rgb(215, 215, 190);
 
-        border-radius: 5%;
+        border-radius: 15px;
     }
         .theDeleteLabel .title-wrapper{
             width: 100%;

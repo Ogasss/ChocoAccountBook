@@ -112,7 +112,7 @@ components:{
 
     margin: auto;
 
-    border-radius: 3%;
+    border-radius: 15px;;
     background: rgb(240, 235, 225);
 }
     .theContent .title-wrapper{

@@ -128,7 +128,7 @@ span{
 .theModifyRecord{
     width: 100%;
     height: 100%;
-    border-radius: 5%;
+    border-radius: 15px;
     background: rgb(215, 215, 190);
     display: flex;
     flex-direction: column;
@@ -142,7 +142,7 @@ span{
 }
 .content{
     background: rgb(240, 235, 225);
-    border-radius: 3%;
+    border-radius: 15px;;
     margin: auto;
     margin-top: 2%;
     width: 95%;
@@ -168,7 +168,7 @@ span{
             margin: auto;
             transform: translate(-8px);
             background: rgb(215, 215, 190);
-            border-radius: 5%;
+            border-radius: 15px;
             display: flex;
         }
             .content .message .record span{

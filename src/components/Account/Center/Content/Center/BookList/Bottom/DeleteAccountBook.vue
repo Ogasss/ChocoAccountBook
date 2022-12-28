@@ -34,7 +34,7 @@ components:{
 
 <style lang="scss" scoped>
 .theModifyAccount{
-    border-radius: 5%;
+    border-radius: 15px;
 
     background: rgb(215, 215, 190);
 

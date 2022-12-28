@@ -43,7 +43,7 @@ export default {
                 display: flex;
                 flex-direction: column;
 
-                border-radius: 5%;
+                border-radius: 15px;
 
                 background: rgb(240, 235, 225);
             }
